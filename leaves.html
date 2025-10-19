@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Branches + Leaves (Clustered Realism)</title>
+<title>Branches + Leaves (Attached Realism)</title>
 
 <style>
 html, body {
@@ -47,6 +47,8 @@ function rand(min, max) { return Math.random() * (max - min) + min; }
 const colors = ["#a0522d","#b87333","#cd853f","#d2691e","#ff8c00","#c04000","#804000"];
 
 function drawLeafCluster(x, y, clusterSize) {
+  let lastX = x;
+  let lastY = y;
   for (let i = 0; i < clusterSize; i++) {
     const rx = rand(3, 6);
     const ry = rand(6, 9);
@@ -55,17 +57,22 @@ function drawLeafCluster(x, y, clusterSize) {
     const rotation = rand(0, 360);
     const color = colors[Math.floor(rand(0, colors.length))];
     const leaf = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-    leaf.setAttribute("cx", x + offsetX);
-    leaf.setAttribute("cy", y + offsetY);
+    const newX = lastX + offsetX;
+    const newY = lastY + offsetY;
+    leaf.setAttribute("cx", newX);
+    leaf.setAttribute("cy", newY);
     leaf.setAttribute("rx", rx);
     leaf.setAttribute("ry", ry);
     leaf.setAttribute("fill", color);
-    leaf.setAttribute("transform", `rotate(${rotation} ${x + offsetX} ${y + offsetY})`);
+    leaf.setAttribute("transform", `rotate(${rotation} ${newX} ${newY})`);
     svg.appendChild(leaf);
+    lastX = newX;  // chain cluster, so next leaf grows from previous
+    lastY = newY;
   }
 }
 
 const branchCount = Math.floor(rand(5, 8));
+let leafAnchors = [];
 
 for (let i = 0; i < branchCount; i++) {
   const startY = baseY - rand(height * 0.05, height * 0.3);
@@ -79,13 +86,18 @@ for (let i = 0; i < branchCount; i++) {
   path.setAttribute("d", `M ${startX},${startY} Q ${curveX},${curveY} ${endX},${endY}`);
   svg.appendChild(path);
 
-  const clusterCount = Math.floor(rand(8, 14));
-  for (let j = 0; j < clusterCount; j++) {
-    const offsetX = rand(-50, 50);
-    const offsetY = rand(-50, 50);
-    drawLeafCluster(endX + offsetX, endY + offsetY, Math.floor(rand(3, 7)));
-  }
+  leafAnchors.push({x:endX, y:endY});
 }
+
+// Attach clusters to branches or to existing leaves
+leafAnchors.forEach(anchor => {
+  drawLeafCluster(anchor.x, anchor.y, Math.floor(rand(4, 9)));
+  if (Math.random() < 0.3) {
+    // 30% chance to grow a nearby cluster (attached to previous leaf)
+    const neighbor = leafAnchors[Math.floor(rand(0, leafAnchors.length))];
+    drawLeafCluster(neighbor.x + rand(-40, 40), neighbor.y + rand(-40, 40), Math.floor(rand(3, 6)));
+  }
+});
 </script>
 </body>
 </html>
