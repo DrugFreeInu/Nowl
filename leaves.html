@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Branches + Leaves (Full Canopy)</title>
+<title>Branches + Leaves (Clustered Realism)</title>
 
 <style>
 html, body {
@@ -46,19 +46,23 @@ function rand(min, max) { return Math.random() * (max - min) + min; }
 
 const colors = ["#a0522d","#b87333","#cd853f","#d2691e","#ff8c00","#c04000","#804000"];
 
-function drawLeaf(x, y) {
-  const rx = rand(3, 6);
-  const ry = rand(6, 9);
-  const rotation = rand(0, 360);
-  const color = colors[Math.floor(rand(0, colors.length))];
-  const leaf = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-  leaf.setAttribute("cx", x);
-  leaf.setAttribute("cy", y);
-  leaf.setAttribute("rx", rx);
-  leaf.setAttribute("ry", ry);
-  leaf.setAttribute("fill", color);
-  leaf.setAttribute("transform", `rotate(${rotation} ${x} ${y})`);
-  svg.appendChild(leaf);
+function drawLeafCluster(x, y, clusterSize) {
+  for (let i = 0; i < clusterSize; i++) {
+    const rx = rand(3, 6);
+    const ry = rand(6, 9);
+    const offsetX = rand(-10, 10);
+    const offsetY = rand(-10, 10);
+    const rotation = rand(0, 360);
+    const color = colors[Math.floor(rand(0, colors.length))];
+    const leaf = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+    leaf.setAttribute("cx", x + offsetX);
+    leaf.setAttribute("cy", y + offsetY);
+    leaf.setAttribute("rx", rx);
+    leaf.setAttribute("ry", ry);
+    leaf.setAttribute("fill", color);
+    leaf.setAttribute("transform", `rotate(${rotation} ${x + offsetX} ${y + offsetY})`);
+    svg.appendChild(leaf);
+  }
 }
 
 const branchCount = Math.floor(rand(5, 8));
@@ -75,11 +79,11 @@ for (let i = 0; i < branchCount; i++) {
   path.setAttribute("d", `M ${startX},${startY} Q ${curveX},${curveY} ${endX},${endY}`);
   svg.appendChild(path);
 
-  const leafClusters = Math.floor(rand(10, 20)); // more leaves per branch
-  for (let j = 0; j < leafClusters; j++) {
-    const offsetX = rand(-40, 40);
-    const offsetY = rand(-40, 40);
-    drawLeaf(endX + offsetX, endY + offsetY);
+  const clusterCount = Math.floor(rand(8, 14));
+  for (let j = 0; j < clusterCount; j++) {
+    const offsetX = rand(-50, 50);
+    const offsetY = rand(-50, 50);
+    drawLeafCluster(endX + offsetX, endY + offsetY, Math.floor(rand(3, 7)));
   }
 }
 </script>
