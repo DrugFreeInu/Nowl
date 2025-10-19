@@ -14,23 +14,41 @@ html, body {
   overflow: hidden;
 }
 
-/* Mountain silhouette */
-.mountains {
+svg {
   position: absolute;
   bottom: 35%;
   left: 0;
   width: 100%;
   height: 25%;
-  background: #1a0f08; /* dark silhouette brown */
-  clip-path: polygon(
-    0% 100%, 10% 60%, 20% 70%, 30% 50%, 40% 75%, 50% 45%, 
-    60% 70%, 70% 55%, 80% 75%, 90% 60%, 100% 100%
-  );
+}
+
+path {
+  fill: #1a0f08; /* dark silhouette brown */
 }
 </style>
 </head>
 
 <body>
-  <div class="mountains"></div>
+<svg id="mountains"></svg>
+
+<script>
+const svg = document.getElementById("mountains");
+const w = window.innerWidth;
+const h = window.innerHeight * 0.25;
+const peaks = 6 + Math.floor(Math.random() * 5); // 6–10 peaks
+let d = `M0,${h}`;
+
+for (let i = 0; i <= peaks; i++) {
+  const x = (w / peaks) * i;
+  const y = h - (Math.random() * (h * 0.8));
+  d += ` L${x},${y}`;
+}
+
+d += ` L${w},${h} L${w},${h * 2} L0,${h * 2} Z`;
+
+const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+path.setAttribute("d", d);
+svg.appendChild(path);
+</script>
 </body>
 </html>
