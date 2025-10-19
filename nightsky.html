@@ -10,11 +10,11 @@ html, body {
   margin: 0;
   height: 100%;
   width: 100%;
-background: radial-gradient(circle at bottom, #010103 0%, #0a0a14 100%);
+  background: linear-gradient(to top, #0a0f1a 0%, #000000 90%);
   overflow: hidden;
 }
 
-/* Stars */
+/* Star field */
 .star {
   position: absolute;
   width: 2px;
@@ -36,12 +36,12 @@ background: radial-gradient(circle at bottom, #010103 0%, #0a0a14 100%);
 <script>
 const starCount = 150;
 for (let i = 0; i < starCount; i++) {
-  const star = document.createElement('div');
-  star.className = 'star';
-  star.style.top = Math.random() * 100 + '%';
-  star.style.left = Math.random() * 100 + '%';
-  star.style.animationDelay = (Math.random() * 3) + 's';
-  document.body.appendChild(star);
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.top = Math.random() * 100 + '%';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.animationDelay = (Math.random() * 3) + 's';
+  document.body.appendChild(s);
 }
 </script>
 </body>
