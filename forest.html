@@ -14,27 +14,28 @@ html, body {
   overflow: hidden;
 }
 
-/* Ground gradient — faint light from moon above */
+/* Deep forest ground */
 .ground {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 35%;
-  background: linear-gradient(to top, #1a0f08 0%, #23130b 40%, transparent 100%);
-  filter: brightness(0.9) contrast(1.2);
+  background: linear-gradient(to top, #0c0704 0%, #1a0f08 50%, transparent 100%);
+  filter: brightness(1) contrast(1.2);
 }
 
-/* Slight glow where moonlight would touch */
+/* Faint moon reflection — now blended instead of bright ball */
 .moonlight {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
-  height: 40%;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 70%);
-  opacity: 0.6;
+  width: 100%;
+  height: 50%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 80%);
+  opacity: 0.5;
+  mix-blend-mode: screen;
 }
 </style>
 </head>
