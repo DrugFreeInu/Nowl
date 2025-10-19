@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Leaves</title>
+<title>Branches + Leaves</title>
 
 <style>
 html, body {
@@ -20,6 +20,12 @@ svg {
   width: 100%;
   height: 65%;
 }
+path {
+  fill: none;
+  stroke: #120a04; /* dark brown trunk color */
+  stroke-width: 4;
+  stroke-linecap: round;
+}
 ellipse {
   opacity: 0.9;
 }
@@ -27,10 +33,10 @@ ellipse {
 </head>
 
 <body>
-<svg id="leaves"></svg>
+<svg id="tree"></svg>
 
 <script>
-const svg = document.getElementById("leaves");
+const svg = document.getElementById("tree");
 const width = window.innerWidth;
 const height = window.innerHeight;
 const baseX = width / 2;
@@ -40,12 +46,10 @@ function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// autumn & green mix palette (transition season)
-const colors = [
-  "#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#228b22", "#556b2f"
-];
+// autumn palette only
+const colors = ["#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#804000"];
 
-// function to draw one leaf
+// draw leaf
 function drawLeaf(x, y) {
   const rx = rand(3, 6);
   const ry = rand(6, 9);
@@ -61,18 +65,27 @@ function drawLeaf(x, y) {
   svg.appendChild(leaf);
 }
 
-// generate leaves attached to invisible branch structure
+// generate branches + leaves
 const branchCount = Math.floor(rand(4, 7));
+
 for (let i = 0; i < branchCount; i++) {
   const startY = baseY - rand(height * 0.05, height * 0.3);
   const startX = baseX + rand(-5, 5);
   const endX = baseX + rand(-width * 0.25, width * 0.25);
   const endY = startY - rand(height * 0.05, height * 0.2);
+  const curveX = (startX + endX) / 2 + rand(-50, 50);
+  const curveY = (startY + endY) / 2 - rand(50, 100);
 
+  // draw branch
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", `M ${startX},${startY} Q ${curveX},${curveY} ${endX},${endY}`);
+  svg.appendChild(path);
+
+  // attach leaves to branch tip
   const leafCount = Math.floor(rand(2, 5));
   for (let j = 0; j < leafCount; j++) {
-    const offsetX = rand(-20, 20);
-    const offsetY = rand(-20, 20);
+    const offsetX = rand(-15, 15);
+    const offsetY = rand(-15, 15);
     drawLeaf(endX + offsetX, endY + offsetY);
   }
 }
