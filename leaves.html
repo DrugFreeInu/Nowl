@@ -15,7 +15,7 @@ html, body {
 }
 svg {
   position: absolute;
-  bottom: 35%; /* aligns with trunk & branches */
+  bottom: 35%;
   left: 0;
   width: 100%;
   height: 65%;
@@ -36,25 +36,21 @@ const height = window.innerHeight;
 const baseX = width / 2;
 const baseY = height * 0.65;
 
-// helper
 function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// autumn palette
-const colors = ["#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#804000"];
+// autumn & green mix palette (transition season)
+const colors = [
+  "#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#228b22", "#556b2f"
+];
 
-// 25–40 leaves
-const leafCount = Math.floor(rand(25, 40));
-
-for (let i = 0; i < leafCount; i++) {
-  const x = baseX + rand(-width * 0.15, width * 0.15);
-  const y = baseY - rand(height * 0.15, height * 0.4);
+// function to draw one leaf
+function drawLeaf(x, y) {
   const rx = rand(3, 6);
   const ry = rand(6, 9);
   const rotation = rand(0, 360);
   const color = colors[Math.floor(rand(0, colors.length))];
-
   const leaf = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
   leaf.setAttribute("cx", x);
   leaf.setAttribute("cy", y);
@@ -63,6 +59,22 @@ for (let i = 0; i < leafCount; i++) {
   leaf.setAttribute("fill", color);
   leaf.setAttribute("transform", `rotate(${rotation} ${x} ${y})`);
   svg.appendChild(leaf);
+}
+
+// generate leaves attached to invisible branch structure
+const branchCount = Math.floor(rand(4, 7));
+for (let i = 0; i < branchCount; i++) {
+  const startY = baseY - rand(height * 0.05, height * 0.3);
+  const startX = baseX + rand(-5, 5);
+  const endX = baseX + rand(-width * 0.25, width * 0.25);
+  const endY = startY - rand(height * 0.05, height * 0.2);
+
+  const leafCount = Math.floor(rand(2, 5));
+  for (let j = 0; j < leafCount; j++) {
+    const offsetX = rand(-20, 20);
+    const offsetY = rand(-20, 20);
+    drawLeaf(endX + offsetX, endY + offsetY);
+  }
 }
 </script>
 </body>
