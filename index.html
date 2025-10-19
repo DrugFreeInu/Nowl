@@ -3,47 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Nowl · Forest Night</title>
 <style>
 html, body {
   margin: 0;
   height: 100%;
   width: 100%;
-  background: black;
+  background: transparent;
   overflow: hidden;
 }
-
-/* Shared iframe layout */
-iframe {
-  position: fixed;
-  top: 0;
-  left: 0;
+svg {
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  pointer-events: none;
+  height: 50%;
 }
-
-/* Layer order */
-#sky { z-index: 1; }
-#mountains { z-index: 2; }
-#forest { z-index: 3; }
+path {
+  fill: #2b1a0d;
+}
 </style>
 </head>
 
 <body>
-  <!-- Layered scene -->
-  <iframe id="sky" data-src="nightsky.html"></iframe>
-  <iframe id="mountains" data-src="mountains.html"></iframe>
-  <iframe id="forest" data-src="forest.html"></iframe>
+<svg id="mountains"></svg>
 
-  <script>
-    // Auto-update each iframe with timestamp for cache-busting
-    const v = Date.now();
-    document.querySelectorAll("iframe[data-src]").forEach(f => {
-      f.src = `${f.dataset.src}?v=${v}`;
-    });
-  </script>
+<script>
+const svg = document.getElementById("mountains");
+const w = window.innerWidth;
+const h = window.innerHeight / 2;
+const peaks = 6 + Math.floor(Math.random() * 4); // 6–9 peaks
+let d = `M0,${h}`;
+
+for (let i = 0; i <= peaks; i++) {
+  const x = (w / peaks) * i;
+  const y = h - (Math.random() * (h / 1.2)); // random height
+  d += ` L${x},${y}`;
+}
+
+d += ` L${w},${h} L${w},${h*2} L0,${h*2} Z`;
+
+const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+path.setAttribute("d", d);
+svg.appendChild(path);
+</script>
 </body>
 </html>
