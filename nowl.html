@@ -13,16 +13,31 @@ html, body {
   background: transparent;
   overflow: hidden;
 }
+
+/* Base placement */
 svg {
   position: absolute;
-  bottom: 35%; /* sits mid-scene for now */
+  bottom: 35%;
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
   height: 160px;
+  animation: hueShift 18s ease-in-out infinite;
+  filter: hue-rotate(0deg);
 }
+
+/* Camouflage animation */
+@keyframes hueShift {
+  0%   { filter: hue-rotate(0deg); }
+  25%  { filter: hue-rotate(40deg); }
+  50%  { filter: hue-rotate(80deg); }
+  75%  { filter: hue-rotate(40deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+/* Nowl styling */
 .owl-body {
-  fill: #120a04; /* same dark tone as trunk */
+  fill: #120a04; /* starting dark brown base */
 }
 .owl-eye {
   fill: #fff2c4;
