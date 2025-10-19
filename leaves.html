@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Leaves</title>
+
+<style>
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+svg {
+  position: absolute;
+  bottom: 35%; /* aligns with trunk & branches */
+  left: 0;
+  width: 100%;
+  height: 65%;
+}
+ellipse {
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+<svg id="leaves"></svg>
+
+<script>
+const svg = document.getElementById("leaves");
+const width = window.innerWidth;
+const height = window.innerHeight;
+const baseX = width / 2;
+const baseY = height * 0.65;
+
+// helper
+function rand(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// autumn palette
+const colors = ["#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#804000"];
+
+// 25–40 leaves
+const leafCount = Math.floor(rand(25, 40));
+
+for (let i = 0; i < leafCount; i++) {
+  const x = baseX + rand(-width * 0.15, width * 0.15);
+  const y = baseY - rand(height * 0.15, height * 0.4);
+  const rx = rand(3, 6);
+  const ry = rand(6, 9);
+  const rotation = rand(0, 360);
+  const color = colors[Math.floor(rand(0, colors.length))];
+
+  const leaf = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+  leaf.setAttribute("cx", x);
+  leaf.setAttribute("cy", y);
+  leaf.setAttribute("rx", rx);
+  leaf.setAttribute("ry", ry);
+  leaf.setAttribute("fill", color);
+  leaf.setAttribute("transform", `rotate(${rotation} ${x} ${y})`);
+  svg.appendChild(leaf);
+}
+</script>
+</body>
+</html>
