@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Nowl</title>
+
+<style>
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+svg {
+  position: absolute;
+  bottom: 35%; /* sits mid-scene for now */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 160px;
+}
+.owl-body {
+  fill: #120a04; /* same dark tone as trunk */
+}
+.owl-eye {
+  fill: #fff2c4;
+}
+.owl-glasses {
+  stroke: #ffffff;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+<svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+  <!-- Body -->
+  <ellipse class="owl-body" cx="50" cy="90" rx="28" ry="38" />
+  <!-- Head -->
+  <ellipse class="owl-body" cx="50" cy="45" rx="32" ry="28" />
+  <!-- Ears -->
+  <polygon class="owl-body" points="28,30 36,10 44,28" />
+  <polygon class="owl-body" points="56,28 64,10 72,30" />
+  <!-- Eyes -->
+  <circle class="owl-eye" cx="38" cy="45" r="6" />
+  <circle class="owl-eye" cx="62" cy="45" r="6" />
+  <!-- Glasses -->
+  <circle class="owl-glasses" cx="38" cy="45" r="10" />
+  <circle class="owl-glasses" cx="62" cy="45" r="10" />
+  <line class="owl-glasses" x1="48" y1="45" x2="52" y2="45" />
+  <!-- Beak -->
+  <polygon class="owl-body" points="47,55 53,55 50,62" />
+</svg>
+</body>
+</html>
