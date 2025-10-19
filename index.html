@@ -12,6 +12,8 @@ html, body {
   background: black;
   overflow: hidden;
 }
+
+/* Shared iframe layout */
 iframe {
   position: fixed;
   top: 0;
@@ -22,18 +24,22 @@ iframe {
   background: transparent;
   pointer-events: none;
 }
+
+/* Layer order */
+#sky { z-index: 1; }
+#mountains { z-index: 2; }
+#forest { z-index: 3; }
 </style>
 </head>
 
 <body>
-  <!-- Visible iframe structure -->
+  <!-- Layered scene -->
+  <iframe id="sky" data-src="nightsky.html"></iframe>
   <iframe id="mountains" data-src="mountains.html"></iframe>
-<iframe id="forest" data-src="forest.html"></iframe>
-<iframe id="sky" data-src="nightsky.html"></iframe>
-  <!-- Add more layers here as needed -->
+  <iframe id="forest" data-src="forest.html"></iframe>
 
   <script>
-    // Auto-update every iframe with a timestamp
+    // Auto-update each iframe with timestamp for cache-busting
     const v = Date.now();
     document.querySelectorAll("iframe[data-src]").forEach(f => {
       f.src = `${f.dataset.src}?v=${v}`;
