@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Branches + Leaves</title>
+<title>Branches + Leaves (Full Canopy)</title>
 
 <style>
 html, body {
@@ -22,7 +22,7 @@ svg {
 }
 path {
   fill: none;
-  stroke: #120a04; /* dark brown trunk color */
+  stroke: #120a04;
   stroke-width: 4;
   stroke-linecap: round;
 }
@@ -42,14 +42,10 @@ const height = window.innerHeight;
 const baseX = width / 2;
 const baseY = height * 0.65;
 
-function rand(min, max) {
-  return Math.random() * (max - min) + min;
-}
+function rand(min, max) { return Math.random() * (max - min) + min; }
 
-// autumn palette only
-const colors = ["#a0522d", "#b87333", "#cd853f", "#d2691e", "#ff8c00", "#c04000", "#804000"];
+const colors = ["#a0522d","#b87333","#cd853f","#d2691e","#ff8c00","#c04000","#804000"];
 
-// draw leaf
 function drawLeaf(x, y) {
   const rx = rand(3, 6);
   const ry = rand(6, 9);
@@ -65,8 +61,7 @@ function drawLeaf(x, y) {
   svg.appendChild(leaf);
 }
 
-// generate branches + leaves
-const branchCount = Math.floor(rand(4, 7));
+const branchCount = Math.floor(rand(5, 8));
 
 for (let i = 0; i < branchCount; i++) {
   const startY = baseY - rand(height * 0.05, height * 0.3);
@@ -76,16 +71,14 @@ for (let i = 0; i < branchCount; i++) {
   const curveX = (startX + endX) / 2 + rand(-50, 50);
   const curveY = (startY + endY) / 2 - rand(50, 100);
 
-  // draw branch
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("d", `M ${startX},${startY} Q ${curveX},${curveY} ${endX},${endY}`);
   svg.appendChild(path);
 
-  // attach leaves to branch tip
-  const leafCount = Math.floor(rand(2, 5));
-  for (let j = 0; j < leafCount; j++) {
-    const offsetX = rand(-15, 15);
-    const offsetY = rand(-15, 15);
+  const leafClusters = Math.floor(rand(10, 20)); // more leaves per branch
+  for (let j = 0; j < leafClusters; j++) {
+    const offsetX = rand(-40, 40);
+    const offsetY = rand(-40, 40);
     drawLeaf(endX + offsetX, endY + offsetY);
   }
 }
