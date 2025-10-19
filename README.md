@@ -1,2 +1,2 @@
 # Nowl
-Reorting 4 duty
+Reporting 4 duty
