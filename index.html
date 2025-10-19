@@ -26,16 +26,17 @@ iframe {
 </head>
 
 <body>
-  <!-- Base background layer -->
-  <iframe src="nightsky.html?v=1"></iframe>
-  <iframe src="forest.html?v=1"></iframe>
-  
+  <!-- Visible iframe structure -->
+  <iframe id="sky" data-src="nightsky.html"></iframe>
+  <iframe id="forest" data-src="forest.html"></iframe>
+  <!-- Add more layers here as needed -->
 
-  <!-- Future layers will go here -->
-  <!-- <iframe src="moon.html?v=1"></iframe> -->
-  <!-- <iframe src="forest.html?v=1"></iframe> -->
-  <!-- <iframe src="waterfall.html?v=1"></iframe> -->
-  <!-- <iframe src="mist.html?v=1"></iframe> -->
-  <!-- <iframe src="text.html?v=1"></iframe> -->
+  <script>
+    // Auto-update every iframe with a timestamp
+    const v = Date.now();
+    document.querySelectorAll("iframe[data-src]").forEach(f => {
+      f.src = `${f.dataset.src}?v=${v}`;
+    });
+  </script>
 </body>
 </html>
