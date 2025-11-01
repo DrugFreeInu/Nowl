@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>luhvember</title>
+
+<!-- pure transparent wind lines -->
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  width:100%;
+  background:transparent;
+  overflow:hidden;
+}
+
+.line{
+  position:absolute;
+  width:120%;
+  height:2px;
+  left:-10%;
+  background:rgba(255,255,255,0.15);
+  animation: drift 12s ease-in-out infinite;
+  transform-origin:left center;
+  border-radius:1px;
+}
+
+@keyframes drift{
+  0%{ transform:translateX(0) skewY(2deg); opacity:0.2; }
+  25%{ transform:translateX(15%) skewY(4deg); opacity:0.35; }
+  50%{ transform:translateX(30%) skewY(1deg); opacity:0.15; }
+  75%{ transform:translateX(45%) skewY(3deg); opacity:0.3; }
+  100%{ transform:translateX(0) skewY(2deg); opacity:0.2; }
+}
+</style>
+</head>
+<body>
+<script>
+// create layered wind lines
+for(let i=0;i<25;i++){
+  const l=document.createElement('div');
+  l.className='line';
+  l.style.top=`${(i*4)}%`;
+  l.style.animationDelay=`${Math.random()*6}s`;
+  l.style.animationDuration=`${10+Math.random()*8}s`;
+  l.style.opacity=0.1+Math.random()*0.2;
+  document.body.appendChild(l);
+}
+</script>
+</body>
+</html>
