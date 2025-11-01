@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>luhvember</title>
 
-<!-- pure transparent wind lines -->
 <style>
 html,body{
   margin:0;
@@ -15,37 +14,37 @@ html,body{
   overflow:hidden;
 }
 
-.line{
+/* Each gust line */
+.gust{
   position:absolute;
-  width:120%;
   height:2px;
-  left:-10%;
-  background:rgba(255,255,255,0.15);
-  animation: drift 12s ease-in-out infinite;
-  transform-origin:left center;
   border-radius:1px;
+  background:rgba(255,255,255,0.15);
+  filter:blur(1px);
+  animation: drift 6s ease-in-out infinite;
 }
 
 @keyframes drift{
-  0%{ transform:translateX(0) skewY(2deg); opacity:0.2; }
-  25%{ transform:translateX(15%) skewY(4deg); opacity:0.35; }
-  50%{ transform:translateX(30%) skewY(1deg); opacity:0.15; }
-  75%{ transform:translateX(45%) skewY(3deg); opacity:0.3; }
-  100%{ transform:translateX(0) skewY(2deg); opacity:0.2; }
+  0%{ transform:translateX(-20%) skewY(2deg) scaleX(0.5); opacity:0; }
+  10%{ opacity:0.3; }
+  50%{ transform:translateX(60%) skewY(4deg) scaleX(1.2); opacity:0.4; }
+  90%{ opacity:0.1; }
+  100%{ transform:translateX(120%) skewY(3deg) scaleX(0.6); opacity:0; }
 }
 </style>
 </head>
 <body>
 <script>
-// create layered wind lines
-for(let i=0;i<25;i++){
-  const l=document.createElement('div');
-  l.className='line';
-  l.style.top=`${(i*4)}%`;
-  l.style.animationDelay=`${Math.random()*6}s`;
-  l.style.animationDuration=`${10+Math.random()*8}s`;
-  l.style.opacity=0.1+Math.random()*0.2;
-  document.body.appendChild(l);
+const gustCount = 18;
+for(let i=0;i<gustCount;i++){
+  const g=document.createElement('div');
+  g.className='gust';
+  g.style.top=`${Math.random()*100}%`;
+  g.style.width=`${100+Math.random()*100}px`;
+  g.style.animationDelay=`${Math.random()*6}s`;
+  g.style.animationDuration=`${4+Math.random()*4}s`;
+  g.style.opacity=0.1+Math.random()*0.3;
+  document.body.appendChild(g);
 }
 </script>
 </body>
