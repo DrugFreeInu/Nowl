@@ -14,36 +14,48 @@ html,body{
   overflow:hidden;
 }
 
-/* Each gust line */
 .gust{
   position:absolute;
   height:2px;
   border-radius:1px;
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.12);
   filter:blur(1px);
-  animation: drift 6s ease-in-out infinite;
+  animation: gustFlow linear infinite;
 }
 
-@keyframes drift{
-  0%{ transform:translateX(-20%) skewY(2deg) scaleX(0.5); opacity:0; }
-  10%{ opacity:0.3; }
-  50%{ transform:translateX(60%) skewY(4deg) scaleX(1.2); opacity:0.4; }
-  90%{ opacity:0.1; }
-  100%{ transform:translateX(120%) skewY(3deg) scaleX(0.6); opacity:0; }
+@keyframes gustFlow{
+  0%{
+    transform:translateX(-20%) translateY(0) scaleX(0.3) skewY(3deg);
+    opacity:0;
+  }
+  10%{
+    opacity:0.25;
+  }
+  40%{
+    transform:translateX(40vw) translateY(-3vh) scaleX(1.1) skewY(-4deg);
+    opacity:0.3;
+  }
+  70%{
+    transform:translateX(80vw) translateY(3vh) scaleX(0.6) skewY(5deg);
+    opacity:0.2;
+  }
+  100%{
+    transform:translateX(110vw) translateY(0) scaleX(0.4) skewY(-3deg);
+    opacity:0;
+  }
 }
 </style>
 </head>
 <body>
 <script>
-const gustCount = 18;
-for(let i=0;i<gustCount;i++){
+const gusts = 22;
+for(let i=0;i<gusts;i++){
   const g=document.createElement('div');
   g.className='gust';
   g.style.top=`${Math.random()*100}%`;
-  g.style.width=`${100+Math.random()*100}px`;
-  g.style.animationDelay=`${Math.random()*6}s`;
-  g.style.animationDuration=`${4+Math.random()*4}s`;
-  g.style.opacity=0.1+Math.random()*0.3;
+  g.style.width=`${80+Math.random()*160}px`;
+  g.style.animationDuration=`${3+Math.random()*4}s`;
+  g.style.animationDelay=`${Math.random()*5}s`;
   document.body.appendChild(g);
 }
 </script>
